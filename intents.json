@@ -1,0 +1,733 @@
+
+{
+    "intents": [
+      {
+        "tag": "welcome",
+        "patterns": ["hi","hello","hey","good morning","good afternoon"],
+        "responses": [
+          "Welcome to Fasta Pizza. How can I help you today?<br><button class='deal-button' onclick='handleOption(\"Menu assistance\")'>Menu assistance</button><button class='deal-button' onclick='handleOption(\"Track current order\")'>Track current order</button><button class='deal-button' onclick='handleOption(\"Queries & feedback\")'>Queries & feedback</button><button class='deal-button' onclick='handleOption(\"View offers and combos\")'>View offers and combos</button><button class='deal-button' onclick='handleOption(\"Stores near me\")'>Stores near me</button>"
+        ]
+      },
+      {
+        "tag": "menu",
+        "patterns": ["menu", "Show me the menu", "What pizzas do you have?", "Tell me about your pizzas"],
+        "responses": [
+          "Here is our menu:<br><button class='deal-button' onclick=\"handleCategory('Starters')\">Starters</button><ul><li>Short Eats</li><li>Cheesy Pizza Pockets</li></ul><button class='deal-button' onclick=\"handleCategory('Pizza')\">Pizza</button><ul><li>Best Sellers</li><li>Cheesy Feast</li><li>Ride Solo</li><li>Fasta Delights</li><li>Gourmet Pizzas</li></ul><button class='deal-button' onclick=\"handleCategory('Sweet Treats')\">Sweet Treats</button><ul><li>Desserts</li><li>Gelato</li></ul><button class='deal-button' onclick=\"handleCategory('Beverages')\">Beverages</button><ul><li>Hot Beverages</li><li>Cold Drinks</li></ul>Which category would you like to know more about?"
+        ]
+      },
+      {
+        "tag": "starters",
+        "patterns": ["starters", "Show me starters", "Tell me about starters", "I want starters"],
+        "responses": [
+            "You have selected 'Starters'. Here are the items:<br><br>Short Eats:<br><button class='deal-button' onclick=\"handleCategory('Butter Garlic Pinwheel')\">Butter Garlic Pinwheel</button><br><button class='deal-button' onclick=\"handleCategory('Mexican Roll')\">Mexican Roll</button><br><button class='deal-button' onclick=\"handleCategory('Corn & Spinach Parcel')\">Corn & Spinach Parcel</button><br><br>Pizza Pockets:<br><button class='deal-button' onclick=\"handleCategory('Cheesy Italian Mushroom')\">Cheesy Italian Mushroom</button><br><button class='deal-button' onclick=\"handleCategory('Tandoori Paneer')\">Tandoori Paneer</button><br><button class='deal-button' onclick=\"handleCategory('Hot Latina')\">Hot Latina</button><br><br>Which one would you like to know more about?"
+        ]
+      },
+      {
+        "tag": "pizza",
+        "patterns": ["pizza", "Show me pizzas", "Tell me about pizzas", "I want pizzas"],
+        "responses": [
+            "You have selected 'Pizza'. Here are the items:<br><br>Best Sellers:<br><button class='deal-button' onclick=\"handleCategory('Indian Chilli Express')\">Indian Chilli Express</button><br><button class='deal-button' onclick=\"handleCategory('Peri Peri Paneer')\">Peri Peri Paneer</button><br><button class='deal-button' onclick=\"handleCategory('Cheesy Jain')\">Cheesy Jain</button><br><button class='deal-button' onclick=\"handleCategory('Mauritian Chilli Shock')\">Mauritian Chilli Shock</button><br><br>Cheesy Feast:<br><button class='deal-button' onclick=\"handleCategory('Mozzarella Delight')\">Mozzarella Delight</button><br><button class='deal-button' onclick=\"handleCategory('Peri Peri Onion Pizza')\">Peri Peri Onion Pizza</button><br><br>Ride Solo:<br><button class='deal-button' onclick=\"handleCategory('American Corn Pizza')\">American Corn Pizza</button><br><button class='deal-button' onclick=\"handleCategory('Cheesy Jalapeno Pizza')\">Cheesy Jalapeno Pizza</button><br><br>Fasta Delights:<br><button class='deal-button' onclick=\"handleCategory('Fresca Veggie')\">Fresca Veggie</button><br><button class='deal-button' onclick=\"handleCategory('Srilankan Sambal')\">Srilankan Sambal</button><br><br>Gourmet Pizzas:<br><button class='deal-button' onclick=\"handleCategory('Classic Italian Margarita')\">Classic Italian Margarita</button><br><button class='deal-button' onclick=\"handleCategory('American Mushroom & Onion BBQ')\">American Mushroom & Onion BBQ</button><br><button class='deal-button' onclick=\"handleCategory('Whole Wheat Green Velvet')\">Whole Wheat Green Velvet</button><br><button class='deal-button' onclick=\"handleCategory('Gluten Free Pizza')\">Gluten Free Pizza</button><br><br>Which one would you like to know more about?"
+        ]
+      },
+      {
+        "tag": "sweet_treats",
+        "patterns": ["sweet treats", "Show me sweet treats", "Tell me about sweet treats", "I want sweet treats"],
+        "responses": [
+            "You have selected 'Sweet Treats'. Here are the items:<br><br>Desserts:<ul><li>American Chocomax</li><li>Fudgy Choconut</li></ul>Gelato:<ul><li>Doice Leche</li><li>Bubbly Blast</li><li>Merry Strawberry</li><li>French Vanilla</li></ul>"
+        ]
+      },
+      {
+        "tag": "beverages",
+        "patterns": ["beverages", "Hot Beverages", "Tell me about Beverages", "I want Beverages"],
+        "responses": [
+            "You have selected 'Beverages'. Here are the items:<br><br>Hot Beverages:<ul><li>Espresso</li><li>Double Espresso</li><li>Americano</li><li>Cappuccino</li><li>Latte</li><li>Green Tea</li></ul>"
+        ]
+      },
+      {
+        "tag": "view_offers_and_combos",
+        "patterns": ["view offers", "show me offers", "Tell me about combos", "I want offers and combos"],
+        "responses": [
+            "Here are our current offers and combos:<br><br><button class='deal-button' onclick=\"addToCart('Buy 1 Get 1 Free on peri peri onion pizza')\">Buy 1 Get 1 Free on peri peri onion pizza</button><br><button class='deal-button' onclick=\"addToCart('20% off on orders above RS 500')\">20% off on orders above RS 500</button><br><button class='deal-button' onclick=\"addToCart('Free dessert with any pizza order')\">Free dessert with any pizza order</button>"
+        ]
+      },
+      {
+        "tag": "add_to_cart",
+        "patterns": ["add to cart", "I want this offer", "add offer to cart", "add combo to cart"],
+        "responses": [
+            "The item has been added to your cart."
+        ]
+      },
+      {
+        "tag": "queries_&_feedback",
+        "patterns": ["queries & feedback"],
+        "responses": [
+          "You have selected 'Queries & feedback'. Here are the categories:<br><br><button class='deal-button' onclick='handleCategory(\"Product information\")'>Product information</button><br><button class='deal-button' onclick='handleCategory(\"General queries\")'>General queries</button><br><button class='deal-button' onclick='handleCategory(\"Feedback\")'>Feedback</button><br><button class='deal-button' onclick='handleCategory(\"Order-related issues\")'>Order-related issues</button><br><br>Select the one?"
+        ]
+      },
+      {
+        "tag": "product_information",
+        "patterns": ["product information", "tell me about the product", "I want product information"],
+        "responses": [
+            "Please specify the item you'd like to know more about."
+        ]
+      },
+      {
+        "tag": "general_queries",
+        "patterns": ["general queries"],
+        "responses": [
+            "You have selected 'General queries'. Please type your query below."
+        ]
+      },
+      {
+        "tag": "general_query_response",
+        "patterns": [],
+        "responses": [
+            "Thank you for your query. Our team will review it and get back to you shortly. If you need immediate assistance, please contact our support team at info@fastapizza.com or call us at +91 7370057005."
+        ]
+      },
+      {
+        "tag": "feedback",
+        "patterns": ["feedback"],
+        "responses": [
+            "You have selected 'Feedback'. We value your feedback and would love to hear your thoughts. Please type your feedback below."
+        ]
+      },
+      {
+        "tag": "feedback_response",
+        "patterns": ["feedback response"],
+        "responses": [
+            "Thank you for your feedback! We appreciate your input and will use it to improve our services. If you have any specific concerns that need immediate attention, please contact our support team at info@fastapizza.com or call us at +91 7370057005."
+        ]
+      },
+      {
+        "tag": "order_related_issues",
+        "patterns": ["order related issues", "order issues", "order problem"],
+        "responses": [
+          "You have selected 'Order-related issues'. Please provide your order number for us to assist you better."
+        ]
+      },    
+      {
+        "tag": "store_near_me",
+        "patterns": ["stores near me", "nearest store", "find store", "store location"],
+        "responses": [
+          "Please choose how you would like to provide your location:<br><br><button class='deal-button' id='shareLocationButton' style='margin-left: -10px;'>Share location</button><br><button class='deal-button' onclick='handleCategory(\"Enter Location\")' style='margin-left: -10px;'>Enter Location</button>"
+        ]
+      },
+      {
+        "tag": "enter_location",
+        "patterns": [
+          "enter location",
+          "input location",
+          "type location",
+          "provide location"
+        ],
+        "responses": [
+          "Please provide your location so we can find the nearest store for you. Enter your address or area name below:"
+        ]
+      },    
+      {
+        "tag": "Indian Chilli Express",
+        "patterns": [
+          "Tell me more about Indian Chilli Express",
+          "Indian Chilli Express pizza details",
+          "Information about Indian Chilli Express pizza",
+          "Tell me more about Indian Chilli",
+          "Indian Chilli pizza details",
+          "Information about Indian Chilli pizza"
+        ],
+        "responses": [
+          "Indian Chilli Express is a fiery fusion on an Italian sourdough base, featuring hot chili sauce, mozzarella cheese, jalapeno green, red paprika, green chilies, and black olives for a truly spicy pizza experience."
+        ]
+      },
+      {
+        "tag": "Peri Peri Paneer",
+        "patterns": [
+          "Tell me more about Peri Peri Paneer",
+          "Peri Peri Paneer pizza details",
+          "Information about Peri Peri Paneer pizza",
+          "Tell me more about Peri Peri",
+          "Peri Peri pizza details",
+          "Information about Peri Peri pizza"
+        ],
+        "responses": [
+          "Peri Peri Paneer is a delectable blend of Italian and Indian flavors, on an Italian sourdough base, featuring zesty pizza sauce, melted mozzarella cheese, and a flavorful trio of juicy paneer, crisp capsicum with spicy red paprika."
+        ]
+      },
+      {
+        "tag": "Cheesy Jain",
+        "patterns": [
+          "Tell me more about Cheesy Jain",
+          "Cheesy Jain pizza details",
+          "Information about Cheesy Jain pizza",
+          "Tell me more about Cheesy",
+          "Cheesy pizza details",
+          "Information about Cheesy pizza"
+        ],
+        "responses": [
+          "Cheesy Jain is a vegetarian delight on an Italian sourdough base, made with Jain pizza sauce, marinated paneer, zucchini, green capsicum, black olives, and red paprika, delivering a deliciously cheesy flavor experience."
+        ]
+      },
+      {
+        "tag": "Mauritian Chilli Shock",
+        "patterns": [
+          "Tell me more about Mauritian Chilli Shock",
+          "Mauritian Chilli Shock pizza details",
+          "Information about Mauritian Chilli Shock pizza",
+          "Tell me more about Mauritian Chilli",
+          "Mauritian Chilli pizza details",
+          "Information about Mauritian Chilli pizza"
+        ],
+        "responses": [
+          "Mauritian Chilli Shock is a premium Italian sourdough pizza, combining a traditional base with the bold kick of Mauritian green chili sauce and creamy mozzarella cheese for a tantalizing taste sensation."
+        ]
+      },
+      {
+        "tag": "Butter Garlic Pinwheel",
+        "patterns": [
+          "Tell me more about Butter Garlic Pinwheel",
+          "Butter Garlic Pinwheel details",
+          "Information about Butter Garlic Pinwheel",
+          "Tell me more about Butter Garlic",
+          "Butter Garlic snack details",
+          "Information about Butter Garlic snack"
+        ],
+        "responses": [
+          "Butter Garlic Pinwheel is a buttery, crispy pastry with a hint of garlic for a light, satisfying snack."
+        ]
+      },
+      {
+        "tag": "Mexican Roll",
+        "patterns": [
+          "Tell me more about Mexican Roll",
+          "Mexican Roll details",
+          "Information about Mexican Roll",
+          "Tell me more about Mexican",
+          "Mexican snack details",
+          "Information about Mexican snack"
+        ],
+        "responses": [
+          "Mexican Roll features stuffed bread rolls with ample amounts of cheese and spice that guarantees your need for a light snack."
+        ]
+      },
+      {
+        "tag": "Corn and Spinach Parcel",
+        "patterns": ["Corn and Spinach Parcel"],
+        "responses": [
+          "Corn & Spinach Parcel features parcel-shaped puff pastry with spinach and shelled corn fillings, delivering a burst of cheese in every bite."
+        ]
+      },
+      {
+        "tag": "Cheesy Italian Mushroom",
+        "patterns": [
+          "Tell me more about Cheesy Italian Mushroom",
+          "Cheesy Italian Mushroom details",
+          "Information about Cheesy Italian Mushroom",
+          "Tell me more about Italian Mushroom",
+          "Italian Mushroom snack details",
+          "Information about Italian Mushroom snack"
+        ],
+        "responses": [
+          "Cheesy Italian Mushroom is packed with cheese and Italian mushroom filling for a burst of earthy flavors in every bite."
+        ]
+      },
+      {
+        "tag": "Tandoori Paneer",
+        "patterns": [
+          "Tell me more about Tandoori Paneer",
+          "Tandoori Paneer details",
+          "Information about Tandoori Paneer",
+          "Tell me more about Paneer",
+          "Paneer snack details",
+          "Information about Paneer snack"
+        ],
+        "responses": [
+          "Tandoori Paneer features Dhaba style aromatic Punjabi paneer tikka filling that elevates your taste buds with the cheesy and spicy notes."
+        ]
+      },
+      {
+        "tag": "Hot Latina",
+        "patterns": [
+          "Tell me more about Hot Latina",
+          "Hot Latina details",
+          "Information about Hot Latina",
+          "Tell me more about Latina",
+          "Latina snack details",
+          "Information about Latina snack"
+        ],
+        "responses": [
+          "Hot Latina is a crunchy pizza pack filled with fiery Mexican bean and chili filling, delivering a spicy flavor explosion."
+        ]
+      },
+      {
+        "tag": "Mozzarella Delight",
+        "patterns": [
+          "Tell me more about Mozzarella Delight",
+          "Mozzarella Delight details",
+          "Information about Mozzarella Delight",
+          "Tell me more about Delight",
+          "Delight pizza details",
+          "Information about Delight pizza"
+        ],
+        "responses": [
+          "Mozzarella Delight is a traditional pizza with its flavors kneaded into the premium Italian sourdough base, loaded with a generous amount of cheese."
+        ]
+      },
+      {
+        "tag": "Peri Peri Onion Pizza",
+        "patterns": [
+          "Tell me more about Peri Peri Onion Pizza",
+          "Peri Peri Onion Pizza details",
+          "Information about Peri Peri Onion Pizza",
+          "Tell me more about Peri Peri Pizza",
+          "Peri Peri pizza details",
+          "Information about Peri Peri pizza"
+        ],
+        "responses": [
+          "Peri Peri Onion Pizza features the bold flavors of a premium Italian sourdough base with rich pizza sauce, melty mozzarella cheese, and the fiery tang of peri peri onions."
+        ]
+      },
+      {
+        "tag": "American Corn Pizza",
+        "patterns": [
+          "Tell me more about American Corn Pizza",
+          "American Corn Pizza details",
+          "Information about American Corn Pizza",
+          "Tell me more about Corn Pizza",
+          "Corn Pizza details",
+          "Information about Corn Pizza"
+        ],
+        "responses": [
+          "American Corn Pizza is a fusion of Italian and American cuisines, featuring an Italian sourdough crust topped with tangy pizza sauce, melted mozzarella cheese, and sweet, crunchy tender corn kernels, creating a delightful taste sensation."
+        ]
+      },
+      {
+        "tag": "Cheesy Jalapeno Pizza",
+        "patterns": [
+          "Tell me more about Cheesy Jalapeno Pizza",
+          "Cheesy Jalapeno Pizza details",
+          "Information about Cheesy Jalapeno Pizza",
+          "Tell me more about Jalapeno Pizza",
+          "Jalapeno Pizza details",
+          "Information about Jalapeno Pizza"
+        ],
+        "responses": [
+          "Cheesy Jalapeno Pizza is a zesty premium Italian sourdough pizza featuring a classic base, creamy cheese, and the fiery kick of pickled jalapeno chilies for a spicy twist."
+        ]
+      },
+      {
+        "tag": "Fresca Veggie",
+        "patterns": [
+          "Tell me more about Fresca Veggie",
+          "Fresca Veggie details",
+          "Information about Fresca Veggie",
+          "Tell me more about Veggie Pizza",
+          "Veggie Pizza details",
+          "Information about Veggie Pizza"
+        ],
+        "responses": [
+          "Fresca Veggie is an authentic Italian sourdough pizza recipe loaded with fresh vegetables like green peppers, corn, and onion, baked to perfection."
+        ]
+      },
+      {
+        "tag": "Srilankan Sambal",
+        "patterns": [
+          "Tell me more about Srilankan Sambal",
+          "Srilankan Sambal details",
+          "Information about Srilankan Sambal",
+          "Tell me more about Sambal Pizza",
+          "Sambal Pizza details",
+          "Information about Sambal Pizza"
+        ],
+        "responses": [
+          "Srilankan Sambal is a spicy culinary adventure featuring traditional Italian sourdough pizza with zesty pizza sauce, gooey mozzarella cheese, and the fiery kick of Sri Lankan sambal. It topped with green chilies, tangy pickled onions, black olives, and American corn for a layered explosion of flavors."
+        ]
+      },
+      {
+        "tag": "Classic Italian Margarita",
+        "patterns": [
+          "Tell me more about Classic Italian Margarita",
+          "Classic Italian Margarita details",
+          "Information about Classic Italian Margarita",
+          "Tell me more about Margarita Pizza",
+          "Margarita Pizza details",
+          "Information about Margarita Pizza"
+        ],
+        "responses": [
+          "Classic Italian Margarita features a premium Italian sourdough base adorned with pizza sauce, cherry tomatoes, English cheddar, fresh basil, and aromatic herbs, offering an enduringly delightful flavor experience."
+        ]
+      },
+      {
+        "tag": "American Mushroom and Onion BBQ",
+        "patterns": ["American Mushroom and Onion BBQ"],
+        "responses": [
+          "American Mushroom & Onion BBQ features a premium Italian sourdough base topped with pizza sauce, melty mozzarella cheese, savory mushrooms, onions, a drizzle of smoky BBQ sauce, and a sprinkle of herbs for a savory and sweet fusion."
+        ]
+      },
+      {
+        "tag": "Whole Wheat Green Velvet",
+        "patterns": [
+          "Tell me more about Whole Wheat Green Velvet",
+          "Whole Wheat Green Velvet details",
+          "Information about Whole Wheat Green Velvet",
+          "Tell me more about Green Velvet Pizza",
+          "Green Velvet Pizza details",
+          "Information about Green Velvet Pizza"
+        ],
+        "responses": [
+          "Whole Wheat Green Velvet is infused with the goodness of Italian whole wheat sourdough, tangy spinach sauce, creamy mozzarella cheese, and a colorful medley of red capsicum, green capsicum, onion, baby corn, and black olives for a burst of Mediterranean flavors."
+        ]
+      },
+      {
+        "tag": "Gluten Free Pizza",
+        "patterns": [
+          "Tell me more about Gluten Free Pizza",
+          "Gluten Free Pizza details",
+          "Information about Gluten Free Pizza",
+          "Tell me more about Gluten Free",
+          "Gluten Free details",
+          "Information about Gluten Free"
+        ],
+        "responses": [
+          "Gluten Free Pizza offers a crispy, enticing wedge for the health-conscious. This pizza is low carb, gluten free, and delivers the classic pizza taste in a super filling option."
+        ]
+      },
+      {
+        "tag": "shop_locations",
+        "patterns": [
+          "Where are your shops located?",
+          "Locations of Fasta Pizza shops",
+          "Shop locations",
+          "Where can I find your shops?",
+          "Fasta Pizza locations"
+        ],
+        "responses": [
+          "Our Fasta Pizza shops are located in Gopalapuram, Perungudi, Uthandi, Mahindra City, Mylapore, Vivira Mall, and Chromepet."
+        ]
+      },
+      {
+        "tag": "gopalapuram",
+        "patterns": [
+          "Gopalapuram address",
+          "Where is the Gopalapuram branch located?",
+          "What is the address of Fasta Pizza in Gopalapuram?",
+          "Can you provide the Gopalapuram shop address?",
+          "How do I find the Gopalapuram store?",
+          "Address of Fasta Pizza in Gopalapuram"
+        ],
+        "responses": [
+          "In Gopalapuram, you can find us at 40, Cathedral Rd, near Stella Maris College, Gopalapuram, Chennai, Tamil Nadu 600086.The contact number for our Gopalapuram location is 044-29522952."
+        ]
+      },
+      {
+        "tag": "perungudi",
+        "patterns": [
+          "Perungudi address",
+          "Where is the Perungudi branch located?",
+          "What is the address of Fasta Pizza in Perungudi?",
+          "Can you provide the Perungudi shop address?",
+          "How do I find the Perungudi store?",
+          "Address of Fasta Pizza in Perungudi"
+        ],
+        "responses": [
+          "In Perungudi, you can find us at 49,50 Rajeshwari Street, Santhosh Nagar, Perungudi, Chennai, Tamil Nadu 600041.The contact number for our Perungudi location is 091-50257666."
+        ]
+      },
+      {
+        "tag": "uthandi",
+        "patterns": [
+          "Uthandi address",
+          "Where is the Uthandi branch located?",
+          "What is the address of Fasta Pizza in Uthandi?",
+          "Can you provide the Uthandi shop address?",
+          "How do I find the Uthandi store?",
+          "Address of Fasta Pizza in Uthandi"
+        ],
+        "responses": [
+          "In Uthandi, you can find us at No 402/203, VGP Golden Beach Layout, East Coast Rd, Uthandi, Chennai, Tamil Nadu 600119.The contact number for our Uthandi location is 044-29522952."
+        ]
+      },
+      {
+        "tag": "mahindra_city",
+        "patterns": [
+          "Mahindra City address",
+          "Where is the Mahindra City branch located?",
+          "What is the address of Fasta Pizza in Mahindra City?",
+          "Can you provide the Mahindra City shop address?",
+          "How do I find the Mahindra City store?",
+          "Address of Fasta Pizza in Mahindra City"
+        ],
+        "responses": [
+          "In Mahindra City, you can find us at Mahindra City Veerapuram Village, Mahindra World City, Kancheepuram, Tamil Nadu 603002.The contact number for our Mahindra City location is 072-00387493."
+        ]
+      },
+      {
+        "tag": "mylapore",
+        "patterns": [
+          "Mylapore address",
+          "Where is the Mylapore branch located?",
+          "What is the address of Fasta Pizza in Mylapore?",
+          "Can you provide the Mylapore shop address?",
+          "How do I find the Mylapore store?",
+          "Address of Fasta Pizza in Mylapore"
+        ],
+        "responses": [
+          "In Mylapore, you can find us at Ganesh Arcades, 13/1, Chandrabagh Ave 2nd St, Jagadambal Colony, Othavadi, Mylapore, Chennai, Tamil Nadu 600004.The contact number for our Mylapore location is 091-50257666."
+        ]
+      },
+      {
+        "tag": "vivira_mall",
+        "patterns": [
+          "What is the address of Fasta Pizza in Vivira Mall?",
+          "Can you provide the Vivira Mall shop address?",
+          "How do I find the Vivira Mall store?",
+          "Address of Fasta Pizza in Vivira Mall"
+        ],
+        "responses": [
+          "In Vivira Mall, you can find us on the 4th floor, Vivira Mall, OMR Rd, Navalur, Tamil Nadu 600130.The contact number for our Vivira Mall location is 073-70057005."
+        ]
+      },
+      {
+        "tag": "chromepet",
+        "patterns": [
+          "Chromepet address",
+          "Where is the Chromepet branch located?",
+          "What is the address of Fasta Pizza in Chromepet?",
+          "Can you provide the Chromepet shop address?",
+          "How do I find the Chromepet store?",
+          "Address of Fasta Pizza in Chromepet"
+        ],
+        "responses": [
+          "In Chromepet, you can find us at Old No.32, New No.52, 1, Station Rd, Radha Nagar, Chromepet, Chennai, Tamil Nadu 600044.The contact number for our Chromepet location is 073-70057005."
+        ]
+      },
+      {
+        "tag": "hours",
+        "patterns": [
+          "Tell me about shop timing?",
+          "What are your hours?",
+          "When are you open?",
+          "Opening hours"
+        ],
+        "responses": [
+          "We are open from 11 AM to 11 PM from Monday to Sunday."
+        ]
+      },
+      {
+        "tag": "gopalapuram_contact_number",
+        "patterns": [
+          "Gopalapuram contact number",
+          "What is the contact number for Gopalapuram?",
+          "Can I get the phone number for Gopalapuram?",
+          "Phone number of Fasta Pizza in Gopalapuram?",
+          "Gopalapuram store contact"
+        ],
+        "responses": [
+          "The contact number for our Gopalapuram location is 044-29522952."
+        ]
+      },
+      {
+        "tag": "perungudi_contact_number",
+        "patterns": [
+          "Perungudi contact number",
+          "What is the contact number for Perungudi?",
+          "Can I get the phone number for Perungudi?",
+          "Phone number of Fasta Pizza in Perungudi?",
+          "Perungudi store contact"
+        ],
+        "responses": [
+          "The contact number for our Perungudi location is 091-50257666."
+        ]
+      },
+      {
+        "tag": "uthandi_contact_number",
+        "patterns": [
+          "Uthandi contact number",
+          "What is the contact number for Uthandi?",
+          "Can I get the phone number for Uthandi?",
+          "Phone number of Fasta Pizza in Uthandi?",
+          "Uthandi store contact"
+        ],
+        "responses": [
+          "The contact number for our Uthandi location is 044-29522952."
+        ]
+      },
+      {
+        "tag": "mahindra_city_contact_number",
+        "patterns": [
+          "Mahindra City contact number",
+          "What is the contact number for Mahindra City?",
+          "Can I get the phone number for Mahindra City?",
+          "Phone number of Fasta Pizza in Mahindra City?",
+          "Mahindra City store contact"
+        ],
+        "responses": [
+          "The contact number for our Mahindra City location is 072-00387493."
+        ]
+      },
+      {
+        "tag": "mylapore_contact_number",
+        "patterns": [
+          "Mylapore contact number",
+          "What is the contact number for Mylapore?",
+          "Can I get the phone number for Mylapore?",
+          "Phone number of Fasta Pizza in Mylapore?",
+          "Mylapore store contact"
+        ],
+        "responses": [
+          "The contact number for our Mylapore location is 091-50257666."
+        ]
+      },
+      {
+        "tag": "vivira_mall_contact_number",
+        "patterns": [
+          "Vivira Mall contact number",
+          "What is the contact number for Vivira Mall?",
+          "Can I get the phone number for Vivira Mall?",
+          "Phone number of Fasta Pizza in Vivira Mall?",
+          "Vivira Mall store contact"
+        ],
+        "responses": [
+          "The contact number for our Vivira Mall location is 073-70057005."
+        ]
+      },
+      {
+        "tag": "chromepet_contact_number",
+        "patterns": [
+          "Chromepet contact number",
+          "What is the contact number for Chromepet?",
+          "Can I get the phone number for Chromepet?",
+          "Phone number of Fasta Pizza in Chromepet?",
+          "Chromepet store contact"
+        ],
+        "responses": [
+          "The contact number for our Chromepet location is 073-70057005."
+        ]
+      },
+      {
+        "tag": "order_status",
+        "patterns": [
+          "Where is my order?",
+          "Track my order",
+          "Order status"
+        ],
+        "responses": [
+          "Please provide your order number to track the status."
+        ]
+      },
+      {
+        "tag": "goodbye",
+        "patterns": [
+          "Bye",
+          "See you later",
+          "Thanks",
+          "Goodbye"
+        ],
+        "responses": [
+          "Goodbye!",
+          "See you later!",
+          "Have a nice day!"
+        ]
+      },
+      {
+        "tag": "delivery_service",
+        "patterns": [
+          "Do you offer delivery?",
+          "Can you deliver to my place?",
+          "Delivery service"
+        ],
+        "responses": [
+          "Yes, we offer delivery services."
+        ]
+      },
+      {
+        "tag": "payment_methods",
+        "patterns": [
+          "What payment methods do you accept?",
+          "How can I pay?",
+          "Payment options"
+        ],
+        "responses": [
+          "We accept credit/debit cards, digital wallets, upi and cash on delivery."
+        ]
+      },
+      {
+        "tag": "contact_support",
+        "patterns": [
+          "How can I contact support?",
+          "Customer support contact",
+          "Support information"
+        ],
+        "responses": [
+          "You can contact our support team at info@fastapizza.com or call us at +91 7370057005 or +91 9150257666."
+        ]
+      },
+      {
+        "tag": "late_delivery",
+        "patterns": [
+          "What happens if my delivery is late?",
+          "Late delivery policy",
+          "Delivery delay"
+        ],
+        "responses": [
+          "We apologize for any delays. If your delivery is late, please contact our support for assistance and compensation."
+        ]
+      },
+      {
+        "tag": "cooking_tips",
+        "patterns": [
+          "Can you give me some pizza cooking tips?",
+          "Pizza recipes",
+          "Cooking advice"
+        ],
+        "responses": [
+          "Sure! Here are some pizza cooking tips:\n1. Preheat your oven to the highest temperature.\n2. Use a pizza stone for a crispier crust.\n3. Let your dough rest at room temperature before stretching.\n4. Don't overload your pizza with toppings.\n5. Bake your pizza until the crust is golden brown and the cheese is bubbling."
+        ]
+      },
+      {
+        "tag": "create_account",
+        "patterns": [
+          "How do I create an account?",
+          "Sign up for an account",
+          "Register"
+        ],
+        "responses": [
+          "You can create an account by clicking on the 'Sign Up' button on our website and filling out the registration form."
+        ]
+      },
+      {
+        "tag": "update_account",
+        "patterns": [
+          "How do I update my account information?",
+          "Change account details",
+          "Update profile"
+        ],
+        "responses": [
+          "You can update your account information by logging into your account and going to the 'Profile' section."
+        ]
+      },
+      {
+        "tag": "delete_account",
+        "patterns": [
+          "How do I delete my account?",
+          "Remove my account",
+          "Account deletion"
+        ],
+        "responses": [
+          "You can delete your account by contacting our support team at info@fastapizza.com."
+        ]
+      },
+      {
+        "tag": "loyalty_points",
+        "patterns": [
+          "How do I check my loyalty points?",
+          "Loyalty points balance",
+          "Reward points"
+        ],
+        "responses": [
+          "You can check your loyalty points balance by logging into your account and going to the 'Loyalty Points' section."
+        ]
+      }
+    ]
+  }
+  
+  
