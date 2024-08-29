@@ -770,4 +770,327 @@ if __name__ == "__main__":
 #     app.run(debug=True)
 
 
+#29/08/24
+#database
+
+# from flask import Flask, request, jsonify, render_template
+# import random
+# import json
+# import pickle
+# import numpy as np
+# import nltk
+# import psycopg2
+# from nltk.stem import WordNetLemmatizer
+# from keras.models import load_model
+# from geopy.distance import geodesic
+# from flask_sqlalchemy import SQLAlchemy
+# from psycopg2 import sql
+
+# app = Flask(__name__)
+
+# lemmatizer = WordNetLemmatizer()
+# intents = json.loads(open("C:\\food\\myenv\\intents.json").read())
+
+# words = pickle.load(open('words.pkl', 'rb'))
+# classes = pickle.load(open('classes.pkl', 'rb'))
+# model = load_model('chatbot_food.h5')
+
+# stores = {
+#     "gopalapuram": {
+#         "address": "40, Cathedral Rd, near Stella Maris College, Gopalapuram, Chennai, Tamil Nadu 600086.",
+#         "contact": "044-29522952",
+#         "coords": (13.0489, 80.2586)
+#     },
+#     "chromepet": {
+#         "address": "Old No.32, New No.52, 1, Station Rd, Radha Nagar, Chromepet, Chennai, Tamil Nadu 600044.",
+#         "contact": "073-70057005",
+#         "coords": (12.9516, 80.1462)
+#     }
+# }
+
+# location_coords = {
+#     "santhome": (13.0319, 80.2788),
+#     "nungambakkam": (13.0569, 80.24250),    
+#     "otteri": (13.0921, 80.2510),             
+#     "radha_nagar": (12.9535, 80.1444)  
+# }
+
+
+# cart = []  # In-memory cart
+
+# # Initialize mode variables
+# feedback_mode = False
+# general_query_mode = False
+# store_near_me_mode = False
+# order_related_mode = False
+# order_number = None
+
+# def clean_up_sentence(sentence):
+#     sentence_words = nltk.word_tokenize(sentence)
+#     sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
+#     return sentence_words
+
+# def bag_of_words(sentence):
+#     sentence_words = clean_up_sentence(sentence)
+#     bag = [0] * len(words)
+#     for s in sentence_words:
+#         for i, word in enumerate(words):
+#             if word == s:
+#                 bag[i] = 1
+#     return np.array(bag)
+
+# def predict_class(sentence):
+#     bow = bag_of_words(sentence)
+#     res = model.predict(np.array([bow]))[0]
+#     ERROR_THRESHOLD = 0.25
+#     results = [[i, r] for i, r in enumerate(res) if r > ERROR_THRESHOLD]
+#     results.sort(key=lambda x: x[1], reverse=True)
+#     return [{'intent': classes[r[0]], 'probability': str(r[1])} for r in results]
+
+# def get_response(intents_list, intents_json):
+#     if not intents_list:
+#         return "Sorry, I didn't understand that. Can you please rephrase?"
+    
+#     tag = intents_list[0]['intent']
+#     list_of_intents = intents_json['intents']
+#     for i in list_of_intents:
+#         if i['tag'] == tag:
+#             return random.choice(i['responses'])
+#     return "Sorry, I didn't understand that. Can you please rephrase?"
+
+# def find_nearest_store(location):
+#     location = location.lower().replace(" ", "_")
+    
+#     if location in stores:
+#         store_info = stores[location]
+#         return f"Nearest store:\nAddress: {store_info['address']}\nContact Number: {store_info['contact']}"
+#     elif location in location_coords:
+#         user_coords = location_coords[location]
+#         nearest_store = min(stores.items(), key=lambda x: geodesic(user_coords, x[1]['coords']).km)
+#         store_info = nearest_store[1]
+#         return f"Nearest store:\nAddress: {store_info['address']}\nContact Number: {store_info['contact']}"
+#     else:
+#         return "Sorry, we couldn't find any stores near your location."
+
+# # Database connection function
+# def get_db_connection():
+#     conn = psycopg2.connect(
+#         host="localhost",  
+#         dbname="chat-1",  
+#         user="postgres",  
+#         password="@Viswa2000"  
+#     )
+#     return conn
+
+
+# # Function to save user interaction in the database
+# def save_interaction(interaction_type, user_input):
+#     try:
+#         conn = get_db_connection()
+#         cursor = conn.cursor()
+#         # Adjusted to match the actual interaction types
+#         if interaction_type == 'general_query':
+#             insert_query = sql.SQL("""
+#                 INSERT INTO chatbot (general_queries)
+#                 VALUES (%s)
+#             """)
+#             cursor.execute(insert_query, (user_input,))
+#         elif interaction_type == 'feedback':
+#             insert_query = sql.SQL("""
+#                 INSERT INTO chatbot (feedback)
+#                 VALUES (%s)
+#             """)
+#             cursor.execute(insert_query, (user_input,))
+#         elif interaction_type == 'order_related_issue':
+#             insert_query = sql.SQL("""
+#                 INSERT INTO chatbot (order_related_issues)
+#                 VALUES (%s)
+#             """)
+#             cursor.execute(insert_query, (user_input,))
+#         else:
+#             # Handle unknown interaction types if necessary
+#             print(f"Unknown interaction type: {interaction_type}")
+#             return jsonify({"response": "An unknown error occurred. Please try again later."})
+        
+#         conn.commit()
+#     except Exception as e:
+#         print(f"Error saving interaction: {e}")
+#         return jsonify({"response": "An error occurred while saving your feedback. Please try again later."})
+#     finally:
+#         cursor.close()
+#         conn.close()
+
+# # def save_interaction(interaction_type, user_input):
+# #     try:
+# #         conn = get_db_connection()
+# #         cursor = conn.cursor()
+
+# #         # Check if there is an existing row that needs to be updated
+# #         select_query = """
+# #             SELECT interaction_id FROM chatbot 
+# #             WHERE (general_queries IS NULL OR feedback IS NULL OR order_related_issues IS NULL)
+# #             ORDER BY interaction_id DESC LIMIT 1
+# #         """
+# #         cursor.execute(select_query)
+# #         result = cursor.fetchone()
+        
+# #         # Determine if we should insert a new row or update an existing one
+# #         if result:
+# #             interaction_id = result[0]
+# #             # Update the appropriate field based on the interaction type
+# #             if interaction_type == 'general_query':
+# #                 update_query = """
+# #                     UPDATE chatbot SET general_queries = %s WHERE interaction_id = %s
+# #                 """
+# #             elif interaction_type == 'feedback':
+# #                 update_query = """
+# #                     UPDATE chatbot SET feedback = %s WHERE interaction_id = %s
+# #                 """
+# #             elif interaction_type == 'order_related_issue':
+# #                 update_query = """
+# #                     UPDATE chatbot SET order_related_issues = %s WHERE interaction_id = %s
+# #                 """
+# #             else:
+# #                 print(f"Unknown interaction type: {interaction_type}")
+# #                 return jsonify({"response": "An unknown error occurred. Please try again later."})
+
+# #             cursor.execute(update_query, (user_input, interaction_id))
+
+# #         else:
+# #             # Insert a new row if no partially filled row exists
+# #             insert_query = """
+# #                 INSERT INTO chatbot (general_queries, feedback, order_related_issues)
+# #                 VALUES (%s, %s, %s)
+# #             """
+# #             # Initialize all values to None, update only the relevant field
+# #             if interaction_type == 'general_query':
+# #                 cursor.execute(insert_query, (user_input, None, None))
+# #             elif interaction_type == 'feedback':
+# #                 cursor.execute(insert_query, (None, user_input, None))
+# #             elif interaction_type == 'order_related_issue':
+# #                 cursor.execute(insert_query, (None, None, user_input))
+# #             else:
+# #                 print(f"Unknown interaction type: {interaction_type}")
+# #                 return jsonify({"response": "An unknown error occurred. Please try again later."})
+        
+# #         conn.commit()
+
+# #     except Exception as e:
+# #         print(f"Error saving interaction: {e}")
+# #         return jsonify({"response": "An error occurred while saving your feedback. Please try again later."})
+# #     finally:
+# #         cursor.close()
+# #         conn.close()
+
+# @app.route("/")
+# def home():
+#     return render_template("index.html")
+
+# @app.route("/chat", methods=["POST"])
+# def chat():
+#     global general_query_mode, feedback_mode, store_near_me_mode, order_related_mode, order_number
+
+#     message = request.json.get("message").strip().lower()  # Normalize the message
+    
+#     if store_near_me_mode:
+#         if message in ["enter location", "input location", "type location", "provide location"]:
+#             res = "Please provide your location so we can find the nearest store for you. Enter your address or area name below:"
+#         else:
+#             res = find_nearest_store(message)
+#             store_near_me_mode = False  # Resetting the mode after use
+#     elif feedback_mode:
+#         res = get_response([{'intent': 'feedback_response'}], intents)
+#         save_interaction('feedback', message)  # Save interaction
+#         feedback_mode = False
+#     elif general_query_mode:
+#         res = get_response([{'intent': 'general_query_response'}], intents)
+#         save_interaction('general_query', message)  # Save interaction
+#         general_query_mode = False
+#     elif order_related_mode:
+#         if order_number is None:
+#             if message.isdigit():
+#                 order_number = message
+#                 res = "Thank you. Please describe the issue you are facing with your order."
+#             else:
+#                 res = "You entered an invalid order number. Please provide a valid numeric order number."
+#         else:
+#             res = "We apologize for any inconvenience caused. Our support team will review your issue and get back to you as soon as possible. If you need immediate assistance, please contact our support team at info@fastapizza.com or call us at +91 7370057005."
+#             save_interaction('order_related_issue', message)  # Save interaction
+#             order_related_mode = False  # Resetting the mode after handling the issue
+#             order_number = None  # Reset the order number
+#     else:
+#         ints = predict_class(message)
+#         res = get_response(ints, intents)
+        
+#         # Check for specific intents to set the mode
+#         if ints and ints[0]['intent'] == 'general_queries':
+#             general_query_mode = True
+#         elif ints and ints[0]['intent'] == 'feedback':
+#             feedback_mode = True
+#         elif ints and ints[0]['intent'] == 'store_near_me':
+#             store_near_me_mode = True
+#         elif ints and ints[0]['intent'] == 'view_offers_and_combos':
+#             res = get_response(ints, intents)
+#             cart.append(ints[0]['intent'])  # Add the offer/combo to the cart based on intent
+#         elif ints and ints[0]['intent'] == 'order_related_issues':
+#             order_related_mode = True
+#             res = "You have selected 'Order-related issues'. Please provide your order number for us to assist you better."
+    
+#     return jsonify({"response": res})
+
+
+# @app.route("/share_location", methods=["POST"])
+# def share_location():
+#     global store_near_me_mode
+
+#     data = request.json
+#     permission = data.get("permission")  # The user's choice for location sharing
+#     latitude = data.get("latitude")
+#     longitude = data.get("longitude")
+
+#     if permission == "allow_once":
+#         if latitude is not None and longitude is not None:
+#             user_coords = (latitude, longitude)
+#             nearest_store = min(stores.items(), key=lambda x: geodesic(user_coords, x[1]['coords']).km)
+#             store_info = nearest_store[1]
+#             response = f"Nearest store:\nAddress: {store_info['address']}\nContact Number: {store_info['contact']}"
+#         else:
+#             response = "Unable to determine your location."
+#         store_near_me_mode = False  # Reset the mode after use
+
+#     elif permission == "allow_all_time":
+#         if latitude is not None and longitude is not None:
+#             user_coords = (latitude, longitude)
+#             nearest_store = min(stores.items(), key=lambda x: geodesic(user_coords, x[1]['coords']).km)
+#             store_info = nearest_store[1]
+#             response = f"Nearest store:\nAddress: {store_info['address']}\nContact Number: {store_info['contact']}"
+#         else:
+#             response = "Unable to determine your location."
+#         # Store the user's location for future requests without asking permission again
+#         store_near_me_mode = True  # Keep the mode active for future use
+
+#     elif permission == "deny":
+#         response = "You have denied location access. Unable to provide store information."
+
+#     else:
+#         response = "Invalid permission option."
+
+#     return jsonify({"response": response})
+
+
+# @app.route("/welcome", methods=["GET"])
+# def welcome():
+#     welcome_message = get_response([{'intent': 'welcome'}], intents)
+#     return jsonify({"response": welcome_message})
+
+# @app.route("/add_offer_to_cart", methods=["POST"])
+# def add_offer_to_cart():
+#     offer = request.json.get("offer")
+#     if offer:
+#         cart.append(offer)
+#         return jsonify({"response": f"'{offer}' has been added to your cart."})
+#     return jsonify({"response": "No offer specified."})
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
 
